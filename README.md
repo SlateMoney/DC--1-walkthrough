@@ -46,11 +46,11 @@ authorisation.
 
   Item                                    Value
   --------------------------------------- -------------------------------------------------
-  Attacker OS                             Kali Linux
-  Target                                  DC-1
-  Target address                          `192.168.56.104`
-  Attacker address on host-only network   `192.168.56.107`
-  Network                                 VirtualBox host-only network, `192.168.56.0/24`
+ - Attacker OS                             Kali Linux
+ - Target                                  DC-1
+ - Target address                          `192.168.56.104`
+ - Attacker address on host-only network   `192.168.56.107`
+ - Network                                 VirtualBox host-only network, `192.168.56.0/24`
 
 > **Note:** IP addresses can differ between lab setups. Confirm the
 > target address in your own environment before running any commands.
