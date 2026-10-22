@@ -197,8 +197,6 @@ successfully.
 ![Screenshot 07 --- Metasploit module
 configuration](Screenshots/07-exploit-options.png)
 
-![Screenshot 08 --- Meterpreter session
-opened](Screenshots/08-meterpreter-session.png)
 
 **Result:** Initial access was achieved in the lab. The session ran as
 the web-server account, `www-data`, rather than root.
