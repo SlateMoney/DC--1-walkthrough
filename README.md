@@ -72,7 +72,7 @@ The `eth1` interface had the address `192.168.56.107/24`, which placed
 the attacker on the same host-only subnet as the target.
 
 ![Screenshot 01 --- Kali network
-interfaces](screenshots/01-network-interfaces.png)
+interfaces](Screenshots/01-network-interfaces.png)
 
 **What this tells me:** Confirming the correct interface and subnet
 helps ensure that discovery traffic is sent through the intended lab
@@ -90,7 +90,7 @@ The scan reported four live hosts, including `192.168.56.104`, which I
 selected for further enumeration.
 
 ![Screenshot 02 --- Nmap host
-discovery](screenshots/02-host-discovery.png)
+discovery](Screenshots/02-host-discovery.png)
 
 **Result:** The target was identified at `192.168.56.104`.
 
@@ -113,7 +113,7 @@ The scan identified these open TCP ports:
   `32999/tcp`   status    RPC status service
 
 ![Screenshot 03 --- Nmap service
-enumeration](screenshots/03-service-enumeration.png)
+enumeration](Screenshots/03-service-enumeration.png)
 
 **Analysis:** HTTP was the most promising initial avenue because the
 server exposed a Drupal 7 website. The older software versions were
@@ -134,7 +134,7 @@ The response listed Drupal directories and files, including paths
 associated with modules, themes, installation documentation, and
 user-related routes.
 
-![Screenshot 04 --- robots.txt response](screenshots/04-robots-txt.png)
+![Screenshot 04 --- robots.txt response](Screenshots/04-robots-txt.png)
 
 **Analysis:** `robots.txt` is not an access-control mechanism. Entries
 can, however, provide useful reconnaissance clues about the
@@ -164,10 +164,10 @@ exploit/unix/webapp/drupal_drupalgeddon2
 ```
 
 ![Screenshot 05 --- SearchSploit
-results](screenshots/05-searchsploit-drupal.png)
+results](Screenshots/05-searchsploit-drupal.png)
 
 ![Screenshot 06 --- Metasploit Drupal module
-search](screenshots/06-metasploit-search.png)
+search](Screenshots/06-metasploit-search.png)
 
 **Analysis:** The search results helped me form a testable hypothesis. I
 proceeded with the Drupalgeddon2 module against the isolated lab target
@@ -195,10 +195,10 @@ The recorded output showed that a Meterpreter session opened
 successfully.
 
 ![Screenshot 07 --- Metasploit module
-configuration](screenshots/07-exploit-options.png)
+configuration](Screenshots/07-exploit-options.png)
 
 ![Screenshot 08 --- Meterpreter session
-opened](screenshots/08-meterpreter-session.png)
+opened](Screenshots/08-meterpreter-session.png)
 
 **Result:** Initial access was achieved in the lab. The session ran as
 the web-server account, `www-data`, rather than root.
@@ -225,9 +225,9 @@ The file contained a hint directing attention toward a configuration
 file.
 
 ![Screenshot 09 --- Session identity and web-root
-listing](screenshots/09-webroot-enumeration.png)
+listing](Screenshots/09-webroot-enumeration.png)
 
-![Screenshot 10 --- First flag hint](screenshots/10-flag1.png)
+![Screenshot 10 --- First flag hint](Screenshots/10-flag1.png)
 
 **Analysis:** The flag suggested that configuration review was the next
 logical step. Application configuration files can expose database
@@ -261,7 +261,7 @@ The lab configuration disclosed:
 public screenshot before uploading it to GitHub.
 
 ![Screenshot 11 --- Drupal settings.php and configuration
-finding](screenshots/11-settings-php.png)
+finding](Screenshots/11-settings-php.png)
 
 **Security finding:** Application database credentials were readable
 from the compromised web application context. In a real environment,
@@ -308,7 +308,7 @@ The database contained a Drupal `users` table with account records and
 password hashes.
 
 ![Screenshot 12 --- Interactive
-shell](screenshots/12-interactive-shell.png)
+shell](Screenshots/12-interactive-shell.png)
 
 Database tables screenshots not included
 
@@ -355,7 +355,7 @@ which provided a direct clue for the next stage of the challenge.
 > Special PERMS will help FIND the passwd - but you'll need to -exec that
 > command to work out how to get what's in the shadow.
 
-![Screenshot 13 --- Flag 3 hint on the Drupal site](screenshots/13-flag3-hint.png)
+![Screenshot 13 --- Flag 3 hint on the Drupal site](Screenshots/13-flag3-hint.png)
 
 This hint points toward files with special permissions, the `find`
 command, and the password-shadow files. I followed up by enumerating
@@ -377,7 +377,7 @@ ls
 cat flag4.txt
 ```
 
-![Screenshot 14 --- Fourth flag hint](screenshots/14-flag4-hint.png)
+![Screenshot 14 --- Fourth flag hint](Screenshots/14-flag4-hint.png)
 
 The hint prompted further local enumeration. Access to `/root` was
 denied while the shell was running as `www-data`, so I needed to
@@ -394,7 +394,7 @@ find / -perm -4000 2>/dev/null
 The output included `/usr/bin/find`, along with other SUID binaries.
 
 ![Screenshot 15 --- SUID
-enumeration](screenshots/15-suid-enumeration.png)
+enumeration](Screenshots/15-suid-enumeration.png)
 
 **Analysis:** SUID programs execute with the effective user ID of the
 file owner. A SUID binary with unsafe functionality or configuration can
@@ -422,7 +422,7 @@ The output showed `uid=33(www-data)` but `euid=0(root)`, and `whoami`
 returned `root`.
 
 ![Screenshot 16 --- Root effective ID
-validation](screenshots/16-root-id.png)
+validation](Screenshots/16-root-id.png)
 
 **Result:** Local privilege escalation succeeded in the intentionally
 vulnerable VM. The process retained the original real user ID but had an
@@ -440,7 +440,7 @@ cat thefinalflag.txt
 
 The file confirmed successful completion of the DC-1 challenge.
 
-![Screenshot 17 --- Final flag](screenshots/17-final-flag.png)
+![Screenshot 17 --- Final flag](Screenshots/17-final-flag.png)
 
 **Final result:** Root-level access was achieved and the final flag file
 was read.
