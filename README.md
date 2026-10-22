@@ -481,11 +481,12 @@ was read.
                     accessible using  `drupaldb` enumeration         application data,
                     the exposed                                      including account
                     credentials                                      hashes
-
+                    
   F-05              SUID `find`       SUID enumeration and `id`      Root-level access
                     enabled privilege output showing `euid=0`        
                     escalation in                                    
-                    this lab                                         
+                    this lab                               
+                                       
   ------------------------------------------------------------------------------------
 
 ## Recommendations
@@ -525,54 +526,3 @@ prevent this attack path in a production environment:
     secrets redacted in public reports.
 -   Keep screenshots organised and tie each one to a specific claim or
     stage in the report.
-
-# Screenshot Checklist
-
-Create a folder called `screenshots` in the repository and add the
-relevant images using these filenames:
-
-``` text
-screenshots/
-├── 01-network-interfaces.png
-├── 02-host-discovery.png
-├── 03-service-enumeration.png
-├── 04-robots-txt.png
-├── 05-searchsploit-drupal.png
-├── 06-metasploit-search.png
-├── 07-exploit-options.png
-├── 08-meterpreter-session.png
-├── 09-webroot-enumeration.png
-├── 10-flag1.png
-├── 11-settings-php.png
-├── 12-interactive-shell.png
-├── 13-mysql-enumeration.png
-├── 14-drupal-users-table.png
-├── 15-john-attempt.png
-├── 16-hashcat-attempt.png
-├── 17-flag4-hint.png
-├── 18-flag3-hint.png
-├── 19-suid-enumeration.png
-├── 20-root-id.png
-└── 21-final-flag.png
-```
-
-You can rename the image files if needed, but make sure the filenames in
-this README match the files you commit.
-
-# Suggested Repository Structure
-
-``` text
-DC-1/
-├── README.md
-└── screenshots/
-    ├── 01-network-interfaces.png
-    ├── 02-host-discovery.png
-    └── ...
-```
-
-# Disclaimer
-
-This write-up is for educational purposes and documents testing
-performed against an intentionally vulnerable machine in an isolated
-lab. Only perform security testing on systems you own or have explicit
-permission to assess.
