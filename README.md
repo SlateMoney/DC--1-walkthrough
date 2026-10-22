@@ -310,11 +310,7 @@ password hashes.
 ![Screenshot 12 --- Interactive
 shell](screenshots/12-interactive-shell.png)
 
-![Screenshot 13 --- MySQL database and
-tables](screenshots/13-mysql-enumeration.png)
-
-![Screenshot 14 --- Drupal users
-table](screenshots/14-drupal-users-table.png)
+Database tables screenshots not included
 
 **Analysis:** This confirmed that the exposed configuration values
 allowed access to the application's database. Password hashes were
@@ -340,12 +336,6 @@ successful Hashcat run recovered the Drupal **admin password**. The
 password itself is intentionally **redacted** in this public write-up
 to avoid exposing credentials.
 
-![Screenshot 15 --- John the Ripper
-attempt](screenshots/15-john-attempt.png)
-
-![Screenshot 16 --- Hashcat attempt and
-status](screenshots/16-hashcat-attempt.png)
-
 **Outcome:** Hashcat recovered the admin password; the value is withheld
 from this public report. Password hashes and plaintext credentials are
 not reproduced here.
@@ -357,12 +347,15 @@ password.
 
 ## 11. Flag 3 — SUID `find` hint
 
-The Drupal page titled **flag3** provides a direct clue for the next stage:
+After recovering the Drupal administrator credentials, 
+I used them to log in to the Drupal website. 
+Once authenticated, I located a page titled Flag 3, 
+which provided a direct clue for the next stage of the challenge.
 
 > Special PERMS will help FIND the passwd - but you'll need to -exec that
 > command to work out how to get what's in the shadow.
 
-![Screenshot 18 --- Flag 3 hint on the Drupal site](screenshots/18-flag3-hint.png)
+![Screenshot 13 --- Flag 3 hint on the Drupal site](screenshots/13-flag3-hint.png)
 
 This hint points toward files with special permissions, the `find`
 command, and the password-shadow files. I followed up by enumerating
@@ -384,7 +377,7 @@ ls
 cat flag4.txt
 ```
 
-![Screenshot 17 --- Fourth flag hint](screenshots/17-flag4-hint.png)
+![Screenshot 14 --- Fourth flag hint](screenshots/14-flag4-hint.png)
 
 The hint prompted further local enumeration. Access to `/root` was
 denied while the shell was running as `www-data`, so I needed to
@@ -400,8 +393,8 @@ find / -perm -4000 2>/dev/null
 
 The output included `/usr/bin/find`, along with other SUID binaries.
 
-![Screenshot 19 --- SUID
-enumeration](screenshots/19-suid-enumeration.png)
+![Screenshot 15 --- SUID
+enumeration](screenshots/15-suid-enumeration.png)
 
 **Analysis:** SUID programs execute with the effective user ID of the
 file owner. A SUID binary with unsafe functionality or configuration can
@@ -428,8 +421,8 @@ whoami
 The output showed `uid=33(www-data)` but `euid=0(root)`, and `whoami`
 returned `root`.
 
-![Screenshot 20 --- Root effective ID
-validation](screenshots/20-root-id.png)
+![Screenshot 16 --- Root effective ID
+validation](screenshots/16-root-id.png)
 
 **Result:** Local privilege escalation succeeded in the intentionally
 vulnerable VM. The process retained the original real user ID but had an
@@ -447,7 +440,7 @@ cat thefinalflag.txt
 
 The file confirmed successful completion of the DC-1 challenge.
 
-![Screenshot 21 --- Final flag](screenshots/21-final-flag.png)
+![Screenshot 17 --- Final flag](screenshots/17-final-flag.png)
 
 **Final result:** Root-level access was achieved and the final flag file
 was read.
