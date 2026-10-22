@@ -255,8 +255,7 @@ The lab configuration disclosed:
 -   Database host: `localhost`
 
 **Flag 2 evidence:** The screenshot below documents the discovery in
-`settings.php`. Sensitive credential values should be obscured in any
-public screenshot before uploading it to GitHub.
+`settings.php`.
 
 ![Screenshot 11 --- Drupal settings.php and configuration
 finding](Screenshots/11-settings-php.png)
